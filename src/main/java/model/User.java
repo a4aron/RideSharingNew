@@ -11,9 +11,8 @@ public class User {
     private String userName;
     private String passWord;
     private String type;
-    private String comment;
 
-    public User(int id, String name, LocalDate birthday, String address, String telNum, String userName, String passWord, String type, String comment) {
+    public User(int id, String name, LocalDate birthday, String address, String telNum, String userName, String passWord, String type) {
         this.id = id;
         this.name = name;
         this.birthday = birthday;
@@ -22,7 +21,6 @@ public class User {
         this.userName = userName;
         this.passWord = passWord;
         this.type = type;
-        this.comment = comment;
     }
 
     public int getId() {
@@ -87,13 +85,5 @@ public class User {
 
     public void setType(String type) {
         this.type = type;
-    }
-
-    public String getComment() {
-        return comment;
-    }
-
-    public void setComment(String comment) {
-        this.comment = comment;
     }
 }

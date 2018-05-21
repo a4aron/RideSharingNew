@@ -1,4 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri ="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -101,62 +102,45 @@
                 </div>
             </div>
         </nav>
+        <div class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="header">
+                                <h4 class="title">List of available ride requests</h4>
+                                <%--<p class="category">Here is a subtitle for this table</p>--%>
+                                <a href="/order?action=refresh"><i class="fa fa-refresh pull-right"></i></a>
+                            </div>
+                            <div class="content table-responsive table-full-width">
+                                <table class="table table-hover table-striped">
+                                    <thead>
+                                    <tr><th>Date</th>
+                                        <th>Requestor Name</th>
+                                        <th>Departure</th>
+                                        <th>Destination</th>
+                                        <th>Comment</th>
+                                        <th colspan="2"></th>
+                                    </tr></thead>
+                                    <tbody>
 
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="well well-sm">
-                        <form class="form-horizontal" method="post">
-                            <fieldset>
-                                <legend class="text-center header">Contact us</legend>
+                                    <c:forEach items="${orders}" var="order">
+                                        <tr>
+                                            <td><c:out value="${order.date}" /></td>
+                                            <td><c:out value="${order.requestorUser.name}" /></td>
+                                            <td><c:out value="${order.departure}" /></td>
+                                            <td><c:out value="${order.destination}" /></td>
+                                            <td><c:out value="${order.reqComment}" /></td>
+                                            <td><a href="#">View Detail</a></td>
+                                            <td><a href="/order?action=refresh">Confirm</a></td>
+                                        </tr>
+                                    </c:forEach>
+                                   </tbody>
+                                </table>
 
-                                <div class="form-group">
-                                    <span class="col-md-1 col-md-offset-2 text-center"><i class="fa fa-user bigicon"></i></span>
-                                    <div class="col-md-8">
-                                        <input id="fname" name="name" type="text" placeholder="First Name" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <span class="col-md-1 col-md-offset-2 text-center"><i class="fa fa-user bigicon"></i></span>
-                                    <div class="col-md-8">
-                                        <input id="lname" name="name" type="text" placeholder="Last Name" class="form-control">
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <span class="col-md-1 col-md-offset-2 text-center"><i class="fa fa-envelope-o bigicon"></i></span>
-                                    <div class="col-md-8">
-                                        <input id="email" name="email" type="text" placeholder="Email Address" class="form-control">
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <span class="col-md-1 col-md-offset-2 text-center"><i class="fa fa-phone-square bigicon"></i></span>
-                                    <div class="col-md-8">
-                                        <input id="phone" name="phone" type="text" placeholder="Phone" class="form-control">
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <span class="col-md-1 col-md-offset-2 text-center"><i class="fa fa-pencil-square-o bigicon"></i></span>
-                                    <div class="col-md-8">
-                                        <textarea class="form-control" id="message" name="message" placeholder="Enter your massage for us here. We will get back to you within 2 business days." rows="7"></textarea>
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <div class="col-md-12 text-center">
-                                        <button type="submit" class="btn btn-primary btn-lg">Submit</button>
-                                    </div>
-                                </div>
-                            </fieldset>
-                        </form>
+                            </div>
+                        </div>
                     </div>
-                </div>
-
-                <div class = "col-md-6" style="width: 400px; height: 400px">
-                    <div id="map"></div>
-
                 </div>
             </div>
         </div>

@@ -56,8 +56,9 @@ public class LoginController extends HttpServlet {
             }
 //            view.forward(req, resp);
         } else {
-//            resp.sendRedirect("./login.html");
-            req.getRequestDispatcher("/login");
+            req.getSession().invalidate();
+            resp.sendRedirect("./login.html");
+//            req.getRequestDispatcher("/login").forward(req,resp);
         }
     }
 
