@@ -4,7 +4,7 @@ import java.time.LocalDate;
 public class User {
 
     private int id;
-    private String name;
+        private String name;
     private LocalDate birthday;
     private String address;
     private String telNum;

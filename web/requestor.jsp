@@ -102,7 +102,7 @@
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li>
-                            <a href="#">
+                            <a href="logout">
                                 Log out
                             </a>
                         </li>
@@ -113,39 +113,63 @@
 
 
         <div class="content">
-            <div class="row">
-                <div class="col-md-3" style="width: 40%">
-                    <div class="form-group">
-                        <label>Departure:</label>
-                        <input type="text" class="form-control" placeholder="" value="">
-                    </div>
-                </div>
-                <div class="col-md-4" style="width: 40%">
-                    <div class="form-group">
-                        <label>Destination:</label>
-                        <input type="text" class="form-control" placeholder="" value="">
-                    </div>
-                </div>
-            </div>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-8" style="width: 100%">
+                        <div class="card">
+                            <div class="header">
+                                <h4 class="title">Make Your Order</h4>
+                            </div>
+                            <form action="order" method="post">
+                                <div class="content">
+                                    <div class="row">
+                                        <div class="col-md-3" style="width: 40%">
+                                            <div class="form-group">
+                                                <label>Departure:</label>
+                                                <input type="text" name="departure" class="form-control" placeholder="" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4" style="width: 40%">
+                                            <div class="form-group">
+                                                <label>Destination:</label>
+                                                <input type="text" name="destination" class="form-control" placeholder="" required>
+                                            </div>
+                                        </div>
+                                    </div>
 
-            <div class="row">
-                <div class='col-sm-6'>
-                    <div class="form-group">
-                        <div class='input-group date' id='datetimepicker1'>
-                            <input type='text' class="form-control" />
-                            <span class="input-group-addon">
-                        <span class="glyphicon glyphicon-calendar"></span>
-                    </span>
+                                    <div class="row">
+                                        <div class="col-md-4" style="width: 30%">
+                                            <div class="form-group">
+                                                <label>Date:</label>
+                                                <input id="date_input" name="date" type="date" class="form-control" required />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-4" style="width: 80%;height: 100px">
+                                            <div class="form-group">
+                                                <label>Comment:</label>
+                                                <textarea class="form-control" name="comment" placeholder="decribe your trip"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-4" >
+                                            <div class="form-group">
+                                                <button type="submit" class="btn btn-primary ">Submit</button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </form>
                         </div>
                     </div>
-                </div>
-                <script type="text/javascript">
-                    $(function () {
-                        $('#datetimepicker1').datetimepicker();
-                    });
-                </script>
-            </div>
 
+                </div>
+            </div>
         </div>
 
 
@@ -158,6 +182,9 @@
 <!--   Core JS Files   -->
 <script src="assets/js/jquery-1.10.2.js" type="text/javascript"></script>
 <script src="assets/js/bootstrap.min.js" type="text/javascript"></script>
+
+<script src="assets/js/requestor.js" type="text/javascript"></script>
+
 
 <!--  Checkbox, Radio & Switch Plugins -->
 <script src="assets/js/bootstrap-checkbox-radio-switch.js"></script>
@@ -177,21 +204,5 @@
 <!-- Light Bootstrap Table DEMO methods, don't include it in your project! -->
 <script src="assets/js/demo.js"></script>
 
-<script type="text/javascript">
-    $(document).ready(function () {
-
-        demo.initChartist();
-
-        $.notify({
-            icon: 'pe-7s-gift',
-            message: "Welcome to <b>Light Bootstrap Dashboard</b> - a beautiful freebie for every web developer."
-
-        }, {
-            type: 'info',
-            timer: 4000
-        });
-
-    });
-</script>
 
 </html>

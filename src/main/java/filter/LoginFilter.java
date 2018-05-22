@@ -10,7 +10,7 @@ import java.io.IOException;
 
 @WebFilter(
         filterName = "LoginFilter",
-        urlPatterns = {"/order", ""}
+        urlPatterns = {"/order"}
 )
 public class LoginFilter implements Filter {
 
@@ -22,6 +22,10 @@ public class LoginFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+        if(Constant.TEST){
+            filterChain.doFilter(servletRequest, servletResponse);
+            return;
+        }
         System.out.printf("doFilter");
         HttpServletRequest req = (HttpServletRequest) servletRequest;
         if (req.getSession().getAttribute(Constant.SESSION_KEY_USER) == null) {

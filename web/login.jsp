@@ -1,3 +1,7 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+pageEncoding="ISO-8859-1"%>
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -44,20 +48,26 @@
                         <form method="post" action="/login">
                             <fieldset>
                                 <div class="form-group">
-                                    <input class="form-control" placeholder="E-mail" name="uname" type="email" autofocus>
+                                    <input class="form-control" placeholder="E-mail" name="uname" type="email" value="${cookie.user.value}" autofocus required>
                                 </div>
                                 <div class="form-group">
-                                    <input class="form-control" placeholder="Password" name="pass" type="password" value="">
+                                    <input class="form-control" placeholder="Password" name="pass" type="password" value="" required>
                                 </div>
                                 <div class="checkbox">
                                     <label>
-                                        <input name="remember" type="checkbox" value="Remember Me">Remember Me
+                                        <input name="remember" type="checkbox" value="yes" <c:if test="${cookie.containsKey('user')}">checked</c:if>>Remember Me
                                     </label>
                                 </div>
 
                                 <!-- Change this to a button or input when using this as a form -->
                                 <input class="btn btn-lg btn-success btn-block" type="submit" value="Login" />
                                 <!--<a href="index.html" class="btn btn-lg btn-success btn-block">Login</a>-->
+
+                                <div style="text-align: center" >
+                                    <label>
+                                        <a href="regist.html">Create new account</a>
+                                    </label>
+                                </div>
                             </fieldset>
                         </form>
                     </div>

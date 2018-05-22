@@ -20,4 +20,16 @@
         <servlet-name>OrderController</servlet-name>
         <url-pattern>/order</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>RegistrationController</servlet-name>
+        <servlet-class>controller.regist.RegistrationController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>RegistrationController</servlet-name>
+        <url-pattern>/regist</url-pattern>
+    </servlet-mapping>
+
+
+
 </web-app>
