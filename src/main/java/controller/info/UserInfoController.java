@@ -1,17 +1,19 @@
-package controller.regist;
+package controller.info;
 
-import dao.OrderDAO;
+import constant.Constant;
 import dao.UserDAO;
 import model.User;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDate;
 
-public class RegistrationController extends HttpServlet {
+@WebServlet("/updateInfo")
+public class UserInfoController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -21,20 +23,20 @@ public class RegistrationController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         System.out.println("RegistrationController doPost");
-        String password = req.getParameter("password");
+//        "name": $('#user_name').val(),
+//                "address": $('#user_address').val(),
+//                "email": $('#user_email').val(),
+//                "tel": $('#user_tel').val()
+
         String email = req.getParameter("email");
         String tel = req.getParameter("tel");
-        String type = req.getParameter("type");
         String address = req.getParameter("address");
-        User user = new User(-1,"",LocalDate.MIN,address,tel,email,password,type);
-        if(makeAccount(user)){
-            resp.sendRedirect("./login.jsp");
-        }
 
+        User user = (User)req.getSession().getAttribute(Constant.SESSION_KEY_USER);
+        user.setAddress(address);
+        user.setUserName(email);
+        user.setTelNum(tel);
 
-    }
-
-    private boolean makeAccount(User user){
-        return UserDAO.getInstance().create(user);
+        UserDAO.getInstance().update(user);
     }
 }

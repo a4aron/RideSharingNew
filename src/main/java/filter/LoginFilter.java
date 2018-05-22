@@ -10,7 +10,7 @@ import java.io.IOException;
 
 @WebFilter(
         filterName = "LoginFilter",
-        urlPatterns = {"/order"}
+        urlPatterns = {"/order","/logout"}
 )
 public class LoginFilter implements Filter {
 

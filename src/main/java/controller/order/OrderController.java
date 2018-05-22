@@ -67,6 +67,6 @@ public class OrderController extends HttpServlet {
     }
 
     private void makeOrder(Order order){
-
+        orderDAO.create(order);
     }
 }

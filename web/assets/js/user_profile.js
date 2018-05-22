@@ -3,13 +3,12 @@ $(function () {
 });
 
 function doRequest() {
-    $.ajax("/regist", { "type": "POST",
+    $.ajax("/updateInfo", { "type": "POST",
         "data": {
             "name": $('#user_name').val(),
             "address": $('#user_address').val(),
             "email": $('#user_email').val(),
-            "tel": $('#user_tel').val(),
-            "about_me": $('#user_about_me').val()
+            "tel": $('#user_tel').val()
         }
     }).done(updateProfileSucess)
         .fail(updateProfileFail);

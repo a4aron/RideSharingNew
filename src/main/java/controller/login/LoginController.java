@@ -36,15 +36,6 @@ public class LoginController extends HttpServlet {
             String username = req.getParameter("uname");
             String remember = req.getParameter("remember");
             User user = new User(-1, "ming", LocalDate.MIN, "FairField", "1800000000", "zhaohangqi@gmail.com", "123", "requestor");
-            if ("yes".equals(remember)) {
-                Cookie c = new Cookie("user", username);
-                c.setMaxAge(30 * 24 * 60 * 60);
-                resp.addCookie(c);
-            } else {
-                Cookie c = new Cookie("user", null);
-                c.setMaxAge(0);
-                resp.addCookie(c);
-            }
             HttpSession session = req.getSession();
             session.setAttribute(Constant.SESSION_KEY_USER, user);
             session.setMaxInactiveInterval(20 * 60);
