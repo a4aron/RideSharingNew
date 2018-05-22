@@ -21,12 +21,13 @@ public class RegistrationController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         System.out.println("RegistrationController doPost");
+        String fullname = req.getParameter("fullname");
         String password = req.getParameter("password");
         String email = req.getParameter("email");
         String tel = req.getParameter("tel");
         String type = req.getParameter("type");
         String address = req.getParameter("address");
-        User user = new User(-1,"",LocalDate.MIN,address,tel,email,password,type);
+        User user = new User(-1,fullname,LocalDate.of(1993,8,01),address,tel,email,password,type);
         if(makeAccount(user)){
             resp.sendRedirect("./login.jsp");
         }

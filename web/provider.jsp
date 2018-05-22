@@ -22,6 +22,8 @@
     <!--  Light Bootstrap Table core CSS    -->
     <link href="assets/css/light-bootstrap-dashboard.css" rel="stylesheet"/>
 
+    <!--   Personal style  -->
+    <link href="assets/css/styles.css" rel="stylesheet"/>
 
     <!--  CSS for Demo Purpose, don't include it in your project     -->
     <link href="assets/css/demo.css" rel="stylesheet" />
@@ -50,21 +52,21 @@
 
             <ul class="nav">
                 <li class="active">
-                    <a href="requestor.jsp">
+                    <a href="/order">
                         <i class="fa fa-tachometer"></i>
                         <p>Dashboard</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="/myorder">
+                        <i class="fa fa-map-marker"></i>
+                        <p>My Confirmed Order</p>
                     </a>
                 </li>
                 <li>
                     <a href="user.jsp">
                         <i class="fa fa-user"></i>
                         <p>User Profile</p>
-                    </a>
-                </li>
-                <li>
-                    <a href="provider.jsp">
-                        <i class="fa fa-map-marker"></i>
-                        <p>Maps</p>
                     </a>
                 </li>
             </ul>
@@ -94,7 +96,7 @@
 
                     <ul class="nav navbar-nav navbar-right">
                         <li>
-                            <a href="#">
+                            <a href="logout">
                                 Log out
                             </a>
                         </li>
@@ -125,14 +127,23 @@
                                     <tbody>
 
                                     <c:forEach items="${orders}" var="order">
-                                        <tr>
+                                        <tr id="${order.id}">
                                             <td><c:out value="${order.date}" /></td>
                                             <td><c:out value="${order.requestorUser.name}" /></td>
                                             <td><c:out value="${order.departure}" /></td>
                                             <td><c:out value="${order.destination}" /></td>
                                             <td><c:out value="${order.reqComment}" /></td>
-                                            <td><a href="#">View Detail</a></td>
-                                            <td><a href="/order?action=refresh">Confirm</a></td>
+                                            <td>
+                                                <!-- Modal -->
+                                                <button type="button" class="btn btn-primary btn_triggerRequestorModal btnCustomLink" data-id="${order.id}" data-comment = ${order.reqComment} data-toggle="modal"  data-target="#userDetailModal"  >
+                                                    View Detail
+                                                </button>
+                                            </td>
+                                            <td>
+                                                <button type="button" class="btn btn-primary btn_confirmOrderModal btnCustomLink" data-id="${order.id}" data-toggle="modal"  data-target="#confirmModal"  >
+                                                    Confirm
+                                                </button>
+                                            </td>
                                         </tr>
                                     </c:forEach>
                                    </tbody>
@@ -144,10 +155,97 @@
                 </div>
             </div>
         </div>
+
+
     </div>
 </div>
 
+<div class="modal fade" id="userDetailModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Requestor Detail
+                    <button type="button" class="close pull-right" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">X</span>
+                    </button>
+                </h5>
 
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="col-form-label">Name :</label>
+                    <p id="req_name"></p>
+                </div>
+                <div class="form-group">
+                    <label class="col-form-label">Birthdate : </label>
+                    <p id="ride_date"></p>
+                </div>
+                <div class="form-group">
+                    <label class="col-form-label">Address:</label>
+                    <p id="ride_address"></p>
+                </div>
+                <div class="form-group">
+                    <label class="col-form-label">Contact No:</label>
+                    <p id="ride_phone"></p>
+                </div>
+                <div class="form-group">
+                    <label class="col-form-label">Email :</label>
+                    <p id="ride_email"></p>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-form-label">Departure:</label>
+                    <p id="ride_departure"></p>
+                </div>
+                <div class="form-group">
+                    <label class="col-form-label">Destination:</label>
+                    <p id="ride_destination"></p>
+                </div>
+                <div class="form-group">
+                    <label class="col-form-label">Requested Date:</label>
+                    <p id="riderequest_date"></p>
+                </div>
+                <div class="form-group">
+                    <label class="col-form-label">Comment:</label>
+                    <p id="req_comment"></p>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Confirm
+                    <button type="button" class="close pull-right" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </h5>
+
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                       <h3>Are you Sure?</h3>
+                    </div>
+                    <div class="form-group">
+                        <label for="provider-comment" class="col-form-label">Message: (Optional) </label>
+                        <textarea class="form-control" id="provider-comment"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" id= "btn_confirmOrder" class="btn btn-primary">Confirm Order</button>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 
         <!--   Core JS Files   -->
@@ -165,7 +263,7 @@
 
     <!--  Google Maps Plugin    -->
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
-
+    <script src="assets/js/scripts.js"></script>
     <!-- Light Bootstrap Table Core javascript and methods for Demo purpose -->
 	<script src="assets/js/light-bootstrap-dashboard.js"></script>
 
@@ -173,9 +271,9 @@
 	<script src="assets/js/demo.js"></script>
 
     <script>
-        $().ready(function(){
-            demo.initGoogleMaps();
-        });
+        // $().ready(function(){
+        //     demo.initGoogleMaps();
+        // });
     </script>
 
 </html>

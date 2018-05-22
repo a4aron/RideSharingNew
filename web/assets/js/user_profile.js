@@ -1,6 +1,21 @@
 $(function () {
     $('#update_profile').on('click', doRequest);
+
+    $('#form_neworder').on('submit', makeOrder);
 });
+
+function makeOrder() {
+    event.preventDefault();
+    $.ajax("/order", { "type": "POST",
+        "data": {
+            "departure": $('#departure').val(),
+            "destination": $('#destination').val(),
+            "date": $('#date_input').val(),
+            "comment": $('#comment').val()
+        }
+    }).done(updateProfileSucess)
+        .fail(updateProfileFail);
+}
 
 function doRequest() {
     $.ajax("/updateInfo", { "type": "POST",
@@ -17,7 +32,7 @@ function doRequest() {
 function updateProfileSucess() {
     $.notify({
         icon: 'pe-7s-gift',
-        message: "update successful"
+        message: "Update Successful!"
 
     }, {
         type: 'info',

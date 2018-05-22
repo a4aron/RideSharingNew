@@ -10,7 +10,6 @@ public class Order {
     private LocalDate date;
     private String departure;
     private String destination;
-    private String comment;
     private boolean confirmed;
     private boolean active;
     private User requestorUser;
@@ -21,12 +20,11 @@ public class Order {
     public Order() {
     }
 
-    public Order(int id, LocalDate date, String departure, String destination, String comment, boolean confirmed, boolean active, User requestorUser, User providerUser, String reqComment, String provComment) {
+    public Order(int id, LocalDate date, String departure, String destination, boolean confirmed, boolean active, User requestorUser, User providerUser, String reqComment, String provComment) {
         this.id = id;
         this.date = date;
         this.departure = departure;
         this.destination = destination;
-        this.comment = comment;
         this.confirmed = confirmed;
         this.active = active;
         this.requestorUser = requestorUser;
@@ -65,14 +63,6 @@ public class Order {
 
     public void setDestination(String destination) {
         this.destination = destination;
-    }
-
-    public String getComment() {
-        return comment;
-    }
-
-    public void setComment(String comment) {
-        this.comment = comment;
     }
 
     public boolean isConfirmed() {

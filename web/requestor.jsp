@@ -23,6 +23,8 @@
     <!--  Light Bootstrap Table core CSS    -->
     <link href="assets/css/light-bootstrap-dashboard.css" rel="stylesheet"/>
 
+    <!--   Personal style  -->
+    <link href="assets/css/styles.css" rel="stylesheet"/>
 
     <!--  CSS for Demo Purpose, don't include it in your project     -->
     <link href="assets/css/demo.css" rel="stylesheet"/>
@@ -120,19 +122,19 @@
                             <div class="header">
                                 <h4 class="title">Make Your Order</h4>
                             </div>
-                            <form action="order" method="post">
+                            <form id="form_neworder" action="order" method="post">
                                 <div class="content">
                                     <div class="row">
                                         <div class="col-md-3" style="width: 40%">
                                             <div class="form-group">
                                                 <label>Departure:</label>
-                                                <input type="text" name="departure" class="form-control" placeholder="" required>
+                                                <input type="text" id="departure" class="form-control" placeholder="" required>
                                             </div>
                                         </div>
                                         <div class="col-md-4" style="width: 40%">
                                             <div class="form-group">
                                                 <label>Destination:</label>
-                                                <input type="text" name="destination" class="form-control" placeholder="" required>
+                                                <input type="text" id="destination" class="form-control" placeholder="" required>
                                             </div>
                                         </div>
                                     </div>
@@ -150,7 +152,7 @@
                                         <div class="col-md-4" style="width: 80%;height: 100px">
                                             <div class="form-group">
                                                 <label>Comment:</label>
-                                                <textarea class="form-control" name="comment" placeholder="decribe your trip"></textarea>
+                                                <textarea class="form-control" id="comment" placeholder="decribe your trip"></textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -158,7 +160,7 @@
                                     <div class="row">
                                         <div class="col-md-4" >
                                             <div class="form-group">
-                                                <button type="submit" class="btn btn-primary ">Submit</button>
+                                                <button id="btn_submitOrderForm" type="submit" class="btn btn-primary ">Submit</button>
                                             </div>
                                         </div>
                                     </div>
@@ -183,7 +185,7 @@
 <script src="assets/js/jquery-1.10.2.js" type="text/javascript"></script>
 <script src="assets/js/bootstrap.min.js" type="text/javascript"></script>
 
-<script src="assets/js/requestor.js" type="text/javascript"></script>
+<script src="assets/js/user_profile.js" type="text/javascript"></script>
 
 
 <!--  Checkbox, Radio & Switch Plugins -->
@@ -200,6 +202,8 @@
 
 <!-- Light Bootstrap Table Core javascript and methods for Demo purpose -->
 <script src="assets/js/light-bootstrap-dashboard.js"></script>
+
+<script src="assets/js/scripts.js"></script>
 
 <!-- Light Bootstrap Table DEMO methods, don't include it in your project! -->
 <script src="assets/js/demo.js"></script>
