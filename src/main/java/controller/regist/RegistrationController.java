@@ -32,7 +32,6 @@ public class RegistrationController extends HttpServlet {
             resp.sendRedirect("./login.jsp");
         }
 
-
     }
 
     private boolean makeAccount(User user){

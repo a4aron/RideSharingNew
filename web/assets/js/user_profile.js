@@ -2,7 +2,35 @@ $(function () {
     $('#update_profile').on('click', doRequest);
 
     $('#form_neworder').on('submit', makeOrder);
+
+    $('#register_btn').on('click', register);
 });
+
+
+function register() {
+    event.preventDefault();
+    $.ajax("/regist", { "type": "POST",
+        "data": {
+            "fullname": $('#user_fullname').val(),
+            "email": $('#user_email').val(),
+            "password": $('#user_password').val(),
+            "tel": $('#user_tel').val(),
+            "address": $('#user_address').val(),
+            "type": $('#user_type').val()
+        }
+    }).done(registerSuccess)
+        .fail(registerFail);
+}
+
+function registerSuccess() {
+    alert("registerSuccess");
+    self.location='login.jsp';
+}
+
+function registerFail() {
+
+}
+
 
 function makeOrder() {
     event.preventDefault();
