@@ -2,6 +2,8 @@ package constant;
 
 public class Constant {
 
+    public static boolean TEST = true;
+
     public static final String SESSION_KEY_USER = "user";
     public static final String SESSION_KEY_ORDER = "order";
 
