@@ -164,16 +164,6 @@
                                 </div>
 
 
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label>About Me</label>
-                                            <textarea id="user_about_me" rows="5" class="form-control"
-                                                      placeholder="Here can be your description"
-                                                      value="Mike">${user.comment}</textarea>
-                                        </div>
-                                    </div>
-                                </div>
 
                                 <button id="update_profile" type="submit" class="btn btn-info btn-fill pull-right">Update Profile</button>
                                 <div class="clearfix"></div>

@@ -35,7 +35,7 @@ public class LoginController extends HttpServlet {
         if(Constant.TEST){
             String username = req.getParameter("uname");
             String remember = req.getParameter("remember");
-            User user = new User(-1, "ming", LocalDate.MIN, "FairField", "1800000000", "zhaohangqi@gmail.com", "123", "requestor", "Hello Word");
+            User user = new User(-1, "ming", LocalDate.MIN, "FairField", "1800000000", "zhaohangqi@gmail.com", "123", "requestor");
             if ("yes".equals(remember)) {
                 Cookie c = new Cookie("user", username);
                 c.setMaxAge(30 * 24 * 60 * 60);

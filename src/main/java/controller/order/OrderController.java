@@ -13,14 +13,21 @@ import dao.OrderDAO;
 import model.Order;
 import model.User;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class OrderController extends HttpServlet {
-    ObjectMapper mapper = new ObjectMapper();
-    private OrderDAO orderDAO = OrderDAO.getInstance();
+    private OrderDAO orderDAO ;
+
+    @Override
+    public void init() throws ServletException {
+        if(Constant.TEST) return;
+        orderDAO = OrderDAO.getInstance();
+    }
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//        super.doGet(req, resp);
-        String action = "";
+
         if(Constant.TEST){
             req.getRequestDispatcher("./requestor.jsp").forward(req,resp);
             return;
@@ -31,7 +38,7 @@ public class OrderController extends HttpServlet {
         }
         else {
             // Provider Page
-            action = req.getParameter("action") != null ? req.getParameter("action") : "" ;
+            String action = req.getParameter("action") != null ? req.getParameter("action") : "" ;
             if (action.equalsIgnoreCase("confirm")){
                      //confirm
             }
@@ -52,8 +59,10 @@ public class OrderController extends HttpServlet {
         String date = req.getParameter("date");
         String comment = req.getParameter("comment");
 
+        System.out.println("LocalDate:"+LocalDate.parse(date, DateTimeFormatter.BASIC_ISO_DATE));
         User user = (User)req.getSession().getAttribute(Constant.SESSION_KEY_USER);
-        Order order = new Order("",date,departure,destination,comment,false,true,user,null);
+        Order order = new Order(-1,LocalDate.parse(date, DateTimeFormatter.BASIC_ISO_DATE),departure,destination,comment,false,true,user,null,comment,"");
+        //Order order = new Order("",date,departure,destination,comment,false,true,user,null);
         makeOrder(order);
     }
 

@@ -24,7 +24,7 @@ public class RegistrationController extends HttpServlet {
         String tel = req.getParameter("tel");
         String type = req.getParameter("type");
         String address = req.getParameter("address");
-        User user = new User(-1,"",LocalDate.MIN,address,tel,email,password,type,"");
+        User user = new User(-1,"",LocalDate.MIN,address,tel,email,password,type);
         if(makeAccount(user)){
             resp.sendRedirect("./login.jsp");
         }
