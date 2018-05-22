@@ -12,7 +12,9 @@ $(document).ready(function () {
         var provComment = $("#provider-comment").val();
         $.get('order',{id: global_oid, providercomment:provComment, action:"confirm"})
             .done(function(data){
-                alert(data);
+                $('#confirmModal').modal('toggle');
+                showNotification("Order Confirmed");
+                $('tr#'+global_oid).remove();
             })
             .fail(function(e){
                 $('#confirmModal').find('.modal-body').html("Error fetching data");
@@ -20,7 +22,18 @@ $(document).ready(function () {
             })
     })
 
+
 });
+
+
+function showNotification(msg) {
+    $.notify({
+        message: msg
+    }, {
+        type: 'info',
+        timer: 500
+    });
+}
 
 
 // btn_triggerRequestorModal event

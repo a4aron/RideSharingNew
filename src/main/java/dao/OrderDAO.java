@@ -27,11 +27,11 @@ public class OrderDAO extends DAO {
 
     public boolean create(Order order) {
         int rec_num = databaseConnection.insert(
-                "INSERT INTO `orders`(`requesterId`, `providerId`, `date`, `departure`, `destination`, `confirmed`, `active` `reqComment`, `provComment`) " +
-                        "VALUES ( ?, ?, ?, ?, ? , ?, ?, ?, ?)",
+                "INSERT INTO `orders`(`requesterId`, `date`, `departure`, `destination`, `confirmed`, `active`, `reqComment`, `provComment`) " +
+                        "VALUES ( ?, ?, ?, ? , ?, ?, ?, ?)",
                 new Object[] {
-                        order.getRequestorUser().getId(), order.getProviderUser().getId(), order.getDate(), order.getDeparture(),
-                        order.getDestination(),0,0,order.getReqComment(),order.getProvComment()
+                        order.getRequestorUser().getId(), order.getDate(), order.getDeparture(),
+                        order.getDestination(),0,1,order.getReqComment(),order.getProvComment()
                 }
         ).size();
        return  rec_num > 0 ? true : false;
@@ -77,6 +77,33 @@ public class OrderDAO extends DAO {
         }
         return ret;
     }
+
+    public List<Order> getConfirmedOrderOfProvider (int id){
+        List<Order> ret = new ArrayList<>();
+        ResultSet rs = databaseConnection.select("select * from `orders` WHERE  `confirmed` = 1 AND `providerId` = ?", new Object[]{id});
+        try {
+            while(rs.next()) {
+                Order o = new Order();
+                o.setId(rs.getInt("id"));
+                o.setDate(rs.getDate("date").toLocalDate());
+                o.setDeparture(rs.getString("departure"));
+                o.setDestination(rs.getString("destination"));
+                User requestor = UserDAO.getInstance().getUser(rs.getInt("requesterId"));
+                o.setRequestorUser(requestor);
+                User provider = UserDAO.getInstance().getUser(rs.getInt("providerId"));
+                o.setProviderUser(provider);
+                o.setReqComment(rs.getString("reqComment"));
+                o.setConfirmed(rs.getBoolean("confirmed"));
+                o.setProvComment(rs.getString("active"));
+                o.setProvComment(rs.getString("provComment"));
+                ret.add(o);
+            }
+        } catch (SQLException e) {
+            throw new DatabaseException("getAllCustomers: " + e);
+        }
+        return ret;
+    }
+
     public Order getOrder(int id) {
         ResultSet rs = databaseConnection.select("select * from `orders` where `id` = ? ", new Object[]{id});
         try {
@@ -92,6 +119,7 @@ public class OrderDAO extends DAO {
                 o.setProviderUser(provider);
                 o.setReqComment(rs.getString("reqComment"));
                 o.setConfirmed(rs.getBoolean("confirmed"));
+                o.setProvComment(rs.getString("active"));
                 o.setProvComment(rs.getString("provComment"));
                 return o;
             }

@@ -7,7 +7,7 @@
     <link rel="icon" type="image/png" href="assets/img/favicon.ico">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
 
-    <title>Dashboard </title>
+    <title>Confirmed Orders </title>
 
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport'/>
     <meta name="viewport" content="width=device-width"/>
@@ -49,20 +49,20 @@
             </div>
 
             <ul class="nav">
-                <li class="active">
-                    <a href="requestor.jsp">
+                <li>
+                    <a href="/order" >
                         <i class="fa fa-tachometer"></i>
                         <p>Dashboard</p>
                     </a>
                 </li>
-                <li>
-                    <a href="user.jsp">
+                <li class="active">
+                    <a href="/myorder">
                         <i class="fa fa-user"></i>
-                        <p>User Profile</p>
+                        <p>My Confirmed Order</p>
                     </a>
                 </li>
                 <li>
-                    <a href="provider.jsp">
+                    <a href="/order">
                         <i class="fa fa-map-marker"></i>
                         <p>Maps</p>
                     </a>
@@ -112,73 +112,60 @@
                 </div>
             </div>
         </nav>
+    </div>
 
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="header">
+                            <h4 class="title">List of confirmed orders</h4>
+                            <%--<p class="category">Here is a subtitle for this table</p>--%>
+                        </div>
+                        <div class="content table-responsive table-full-width">
+                            <table class="table table-hover table-striped">
+                                <thead>
+                                <tr><th>Date</th>
+                                    <th>Requestor Name</th>
+                                    <th>Departure</th>
+                                    <th>Destination</th>
+                                    <th>Comment</th>
+                                    <th colspan="2"></th>
+                                </tr></thead>
+                                <tbody>
 
-        <div class="content">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-md-8" style="width: 100%">
-                        <div class="card">
-                            <div class="header">
-                                <h4 class="title">Make Your Order</h4>
-                            </div>
-                            <form id="form_neworder" action="order" method="post">
-                                <div class="content">
-                                    <div class="row">
-                                        <div class="col-md-3" style="width: 40%">
-                                            <div class="form-group">
-                                                <label>Departure:</label>
-                                                <input type="text" id="departure" class="form-control" placeholder="" required>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4" style="width: 40%">
-                                            <div class="form-group">
-                                                <label>Destination:</label>
-                                                <input type="text" id="destination" class="form-control" placeholder="" required>
-                                            </div>
-                                        </div>
-                                    </div>
+                                <c:forEach items="${orders}" var="order">
+                                    <tr id="${order.id}">
+                                        <td><c:out value="${order.date}" /></td>
+                                        <td><c:out value="${order.requestorUser.name}" /></td>
+                                        <td><c:out value="${order.departure}" /></td>
+                                        <td><c:out value="${order.destination}" /></td>
+                                        <td><c:out value="${order.reqComment}" /></td>
+                                        <td>
+                                            <!-- Modal -->
+                                            <button type="button" class="btn btn-primary btn_triggerRequestorModal btnCustomLink" data-id="${order.id}" data-comment = ${order.reqComment} data-toggle="modal"  data-target="#userDetailModal"  >
+                                                View Detail
+                                            </button>
+                                        </td>
+                                        <td>
+                                            <button type="button" class="btn btn-primary btn_confirmOrderModal btnCustomLink" data-id="${order.id}" data-toggle="modal"  data-target="#confirmModal"  >
+                                                Confirm
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </c:forEach>
+                                </tbody>
+                            </table>
 
-                                    <div class="row">
-                                        <div class="col-md-4" style="width: 30%">
-                                            <div class="form-group">
-                                                <label>Date:</label>
-                                                <input id="date_input" name="date" type="date" class="form-control" required />
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-md-4" style="width: 80%;height: 100px">
-                                            <div class="form-group">
-                                                <label>Comment:</label>
-                                                <textarea class="form-control" id="comment" placeholder="decribe your trip"></textarea>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-md-4" >
-                                            <div class="form-group">
-                                                <button id="btn_submitOrderForm" type="submit" class="btn btn-primary ">Submit</button>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </form>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
-
-
     </div>
+
 </div>
-
-
 </body>
 
 <!--   Core JS Files   -->

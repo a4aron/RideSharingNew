@@ -52,21 +52,21 @@
 
             <ul class="nav">
                 <li class="active">
-                    <a href="requestor.jsp">
+                    <a href="/order">
                         <i class="fa fa-tachometer"></i>
                         <p>Dashboard</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="/myorder">
+                        <i class="fa fa-map-marker"></i>
+                        <p>My Confirmed Order</p>
                     </a>
                 </li>
                 <li>
                     <a href="user.jsp">
                         <i class="fa fa-user"></i>
                         <p>User Profile</p>
-                    </a>
-                </li>
-                <li>
-                    <a href="provider.jsp">
-                        <i class="fa fa-map-marker"></i>
-                        <p>Maps</p>
                     </a>
                 </li>
             </ul>
@@ -96,7 +96,7 @@
 
                     <ul class="nav navbar-nav navbar-right">
                         <li>
-                            <a href="#">
+                            <a href="logout">
                                 Log out
                             </a>
                         </li>
@@ -127,7 +127,7 @@
                                     <tbody>
 
                                     <c:forEach items="${orders}" var="order">
-                                        <tr>
+                                        <tr id="${order.id}">
                                             <td><c:out value="${order.date}" /></td>
                                             <td><c:out value="${order.requestorUser.name}" /></td>
                                             <td><c:out value="${order.departure}" /></td>
@@ -164,10 +164,12 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Requestor Detail</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">X</span>
-                </button>
+                <h5 class="modal-title" id="exampleModalLabel">Requestor Detail
+                    <button type="button" class="close pull-right" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">X</span>
+                    </button>
+                </h5>
+
             </div>
             <div class="modal-body">
                 <div class="form-group">
@@ -219,10 +221,12 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Confirm</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                <h5 class="modal-title">Confirm
+                    <button type="button" class="close pull-right" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </h5>
+
             </div>
             <div class="modal-body">
                 <form>
