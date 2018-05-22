@@ -1,5 +1,6 @@
 package controller.order;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sun.tools.corba.se.idl.constExpr.Or;
 import constant.Constant;
 import javax.servlet.ServletException;
@@ -7,14 +8,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import dao.OrderDAO;
+
 import model.Order;
 import model.User;
 import java.io.IOException;
 
 public class OrderController extends HttpServlet {
-
+    ObjectMapper mapper = new ObjectMapper();
+    private OrderDAO orderDAO = OrderDAO.getInstance();
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//        super.doGet(req, resp);
+        String action = "";
         if(Constant.TEST){
             req.getRequestDispatcher("./requestor.jsp").forward(req,resp);
             return;
@@ -24,7 +30,15 @@ public class OrderController extends HttpServlet {
             req.getRequestDispatcher("./requestor.jsp").forward(req,resp);
         }
         else {
-            req.getRequestDispatcher("./provider.jsp").forward(req,resp);
+            // Provider Page
+            action = req.getParameter("action") != null ? req.getParameter("action") : "" ;
+            if (action.equalsIgnoreCase("confirm")){
+                     //confirm
+            }
+            else {
+                req.setAttribute("orders", orderDAO.getUnconfirmedOrder());
+                req.getRequestDispatcher("./provider.jsp").forward(req, resp);
+            }
         }
 
 

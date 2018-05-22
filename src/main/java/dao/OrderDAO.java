@@ -1,8 +1,14 @@
 package dao;
 
+import dbconnection.DatabaseException;
 import model.Order;
-
+import model.User;
+import dao.UserDAO;
 import java.sql.Date;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class OrderDAO extends DAO {
@@ -21,12 +27,11 @@ public class OrderDAO extends DAO {
 
     public boolean create(Order order) {
         int rec_num = databaseConnection.insert(
-                "INSERT INTO `orders`(`requesterId`, `providerId`, `date`, `departure`, `destination`, `confirmed`, `active`) " +
-                        "VALUES ( ?, ?, ?, ?, ? , ?, ?)",
+                "INSERT INTO `orders`(`requesterId`, `providerId`, `date`, `departure`, `destination`, `confirmed`, `active` `reqComment`, `provComment`) " +
+                        "VALUES ( ?, ?, ?, ?, ? , ?, ?, ?, ?)",
                 new Object[] {
-                        order.getRequestorUser().getId(), order.getProviderUser().getId(),
-                        Date.valueOf(order.getDate()), order.getDeparture(), order.getDestination(),order.isConfirmed(),order.isActive()
-
+                        order.getRequestorUser().getId(), order.getProviderUser().getId(), order.getDate(), order.getDeparture(),
+                        order.getDestination(),0,0,order.getReqComment(),order.getProvComment()
                 }
         ).size();
        return  rec_num > 0 ? true : false;
@@ -52,6 +57,25 @@ public class OrderDAO extends DAO {
 
     }
 
+    public List<Order> getUnconfirmedOrder (){
+        List<Order> ret = new ArrayList<>();
+        ResultSet rs = databaseConnection.select("select * from `orders` WHERE  confirmed = 0 AND active = 0", new Object[]{});
+        try {
+            while(rs.next()) {
+                Order o = new Order();
+                o.setId(rs.getInt("id"));
+                User requestor = UserDAO.getInstance().getUser(rs.getInt("requesterId"));
+                o.setRequestorUser(requestor);
+                o.setDate(rs.getDate("date").toLocalDate());
+                o.setDeparture(rs.getString("departure"));
+                o.setDestination(rs.getString("destination"));
+                ret.add(o);
+            }
+        } catch (SQLException e) {
+            throw new DatabaseException("getAllCustomers: " + e);
+        }
+        return ret;
+    }
 //]
 //    public RentalRecord getRentalRecord(long id) {
 //        ResultSet rs = databaseConnection.select(

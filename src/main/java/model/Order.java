@@ -1,11 +1,13 @@
 package model;
 
+import java.time.LocalDate;
+
 public class Order {
 
-    private String id;
-//    private String requesterId;
+    private int id;
+    //    private String requesterId;
 //    private String providerId;
-    private String date;
+    private LocalDate date;
     private String departure;
     private String destination;
     private String comment;
@@ -13,8 +15,13 @@ public class Order {
     private boolean active;
     private User requestorUser;
     private User providerUser;
+    private String reqComment;
+    private String provComment;
 
-    public Order(String id, String date, String departure, String destination, String comment, boolean confirmed, boolean active, User requestorUser, User providerUser) {
+    public Order() {
+    }
+
+    public Order(int id, LocalDate date, String departure, String destination, String comment, boolean confirmed, boolean active, User requestorUser, User providerUser, String reqComment, String provComment) {
         this.id = id;
         this.date = date;
         this.departure = departure;
@@ -24,21 +31,23 @@ public class Order {
         this.active = active;
         this.requestorUser = requestorUser;
         this.providerUser = providerUser;
+        this.reqComment = reqComment;
+        this.provComment = provComment;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public String getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
@@ -97,4 +106,21 @@ public class Order {
     public void setProviderUser(User providerUser) {
         this.providerUser = providerUser;
     }
+
+    public String getReqComment() {
+        return reqComment;
+    }
+
+    public void setReqComment(String reqComment) {
+        this.reqComment = reqComment;
+    }
+
+    public String getProvComment() {
+        return provComment;
+    }
+
+    public void setProvComment(String provComment) {
+        this.provComment = provComment;
+    }
 }
+

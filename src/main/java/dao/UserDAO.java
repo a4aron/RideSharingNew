@@ -25,20 +25,20 @@ public class UserDAO extends DAO {
 
     public boolean create(User user) {
         return databaseConnection.insert(
-                "INSERT INTO `users`(`name`, `birthday`, `address`, `telnum`, `username`, `password`, `type`, `comment`) " +
-                        "VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+                "INSERT INTO `users`(`name`, `birthday`, `address`, `telnum`, `username`, `password`, `type`) " +
+                        "VALUES (?, ?, ?, ?, ?, ?, ?)",
                 new Object[] {user.getName(), user.getBirthday(), user.getAddress(), user.getTelNum(),
-                        user.getUserName(), user.getPassWord(), user.getType(), user.getComment()
+                        user.getUserName(), user.getPassWord(), user.getType()
                 }
         ).size() == 1;
     }
 
     public boolean update(User user) {
         return databaseConnection.update(
-                "UPDATE `users` SET `name`=?,`birthday`=?,`address`=?,`telnum`=?,`username`=?,`password`=?,`type`=? ,`comment`=? WHERE `id` = ?",
+                "UPDATE `users` SET `name`=?,`birthday`=?,`address`=?,`telnum`=?,`username`=?,`password`=?,`type`=? WHERE `id` = ?",
                 new Object[] {
                         user.getName(), user.getBirthday(), user.getAddress(), user.getTelNum(),
-                        user.getUserName(), user.getPassWord(), user.getType(), user.getComment(),
+                        user.getUserName(), user.getPassWord(), user.getType(),
                         user.getId()
                 }
         ) == 1;
@@ -54,7 +54,7 @@ public class UserDAO extends DAO {
     }
 
     public User getUser(int id) {
-        ResultSet rs = databaseConnection.select("select `id`, `name`, `birthday`, `address`, `telnum`, `username`, `password`, `type`, `comment` from `users` where `id` = ?", new Object[]{id});
+        ResultSet rs = databaseConnection.select("select `id`, `name`, `birthday`, `address`, `telnum`, `username`, `password`, `type` from `users` where `id` = ?", new Object[]{id});
         try {
             if (rs.next()) {
                 return new User(
@@ -65,8 +65,7 @@ public class UserDAO extends DAO {
                         rs.getString(5),
                         rs.getString(6),
                         rs.getString(7),
-                        rs.getString(8),
-                        rs.getString(9)
+                        rs.getString(8)
                 );
             }
         } catch (SQLException e) {
@@ -91,7 +90,7 @@ public class UserDAO extends DAO {
     //dont need type as well
     public List<User> getAllUsers() {
         List<User> ret = new ArrayList<>();
-        ResultSet rs = databaseConnection.select("select `id`, `name`, `birthday`, `address`, `telnum`, `type`, `comment` from `users` ", new Object[]{});
+        ResultSet rs = databaseConnection.select("select `id`, `name`, `birthday`, `address`, `telnum`, `type` from `users` ", new Object[]{});
         try {
             while(rs.next()) {
                 ret.add(new User(
@@ -102,8 +101,7 @@ public class UserDAO extends DAO {
                         rs.getString(5),
                         "",
                         "",
-                        rs.getString(6),
-                        rs.getString(7)
+                        rs.getString(6)
                 ));
             }
         } catch (SQLException e) {
@@ -111,4 +109,5 @@ public class UserDAO extends DAO {
         }
         return ret;
     }
+
 }
