@@ -9,11 +9,15 @@ import javax.servlet.http.HttpServletResponse;
 
 import dao.OrderDAO;
 import model.User;
+import model.Order;
+import dao.UserDAO;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 public class OrderController extends HttpServlet {
     ObjectMapper mapper = new ObjectMapper();
     private OrderDAO orderDAO = OrderDAO.getInstance();
+    private UserDAO userDAO = UserDAO.getInstance();
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 //        super.doGet(req, resp);
@@ -27,6 +31,26 @@ public class OrderController extends HttpServlet {
             action = req.getParameter("action") != null ? req.getParameter("action") : "" ;
             if (action.equalsIgnoreCase("confirm")){
                      //confirm
+                String id = req.getParameter("id");
+                String provComment = req.getParameter("providercomment");
+                Order o = orderDAO.getOrder(Integer.valueOf(id));
+                o.setProvComment(provComment);
+                o.setConfirmed(true);
+                o.setProviderUser(userDAO.getUser(user.getId()));
+                PrintWriter out =resp.getWriter();
+                if(orderDAO.update(o)){
+                    out.print("success");
+                }
+                else{
+                    out.print("success");
+                }
+            }
+            else if (action.equalsIgnoreCase("orderinfo")){
+                String id = req.getParameter("id");
+//                User u = userDAO.getUser(Integer.valueOf(id));
+                Order o = orderDAO.getOrder(Integer.valueOf(id));
+                PrintWriter out =resp.getWriter();
+                out.print(mapper.writeValueAsString(o));
             }
             else {
                 req.setAttribute("orders", orderDAO.getUnconfirmedOrder());

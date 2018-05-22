@@ -59,7 +59,7 @@ public class OrderDAO extends DAO {
 
     public List<Order> getUnconfirmedOrder (){
         List<Order> ret = new ArrayList<>();
-        ResultSet rs = databaseConnection.select("select * from `orders` WHERE  confirmed = 0 AND active = 0", new Object[]{});
+        ResultSet rs = databaseConnection.select("select * from `orders` WHERE  confirmed = 0 AND active = 1", new Object[]{});
         try {
             while(rs.next()) {
                 Order o = new Order();
@@ -69,12 +69,36 @@ public class OrderDAO extends DAO {
                 o.setDate(rs.getDate("date").toLocalDate());
                 o.setDeparture(rs.getString("departure"));
                 o.setDestination(rs.getString("destination"));
+                o.setReqComment(rs.getString("reqComment"));
                 ret.add(o);
             }
         } catch (SQLException e) {
             throw new DatabaseException("getAllCustomers: " + e);
         }
         return ret;
+    }
+    public Order getOrder(int id) {
+        ResultSet rs = databaseConnection.select("select * from `orders` where `id` = ? ", new Object[]{id});
+        try {
+            if (rs.next()) {
+                Order o = new Order();
+                o.setId(rs.getInt("id"));
+                o.setDate(rs.getDate("date").toLocalDate());
+                o.setDeparture(rs.getString("departure"));
+                o.setDestination(rs.getString("destination"));
+                User requestor = UserDAO.getInstance().getUser(rs.getInt("requesterId"));
+                o.setRequestorUser(requestor);
+                User provider = UserDAO.getInstance().getUser(rs.getInt("providerId"));
+                o.setProviderUser(provider);
+                o.setReqComment(rs.getString("reqComment"));
+                o.setConfirmed(rs.getBoolean("confirmed"));
+                o.setProvComment(rs.getString("provComment"));
+                return o;
+            }
+        } catch (SQLException e) {
+            throw new DatabaseException("getOrder: " + e);
+        }
+        return null;
     }
 //]
 //    public RentalRecord getRentalRecord(long id) {

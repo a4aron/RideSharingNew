@@ -22,6 +22,8 @@
     <!--  Light Bootstrap Table core CSS    -->
     <link href="assets/css/light-bootstrap-dashboard.css" rel="stylesheet"/>
 
+    <!--   Personal style  -->
+    <link href="assets/css/styles.css" rel="stylesheet"/>
 
     <!--  CSS for Demo Purpose, don't include it in your project     -->
     <link href="assets/css/demo.css" rel="stylesheet" />
@@ -131,8 +133,17 @@
                                             <td><c:out value="${order.departure}" /></td>
                                             <td><c:out value="${order.destination}" /></td>
                                             <td><c:out value="${order.reqComment}" /></td>
-                                            <td><a href="#">View Detail</a></td>
-                                            <td><a href="/order?action=refresh">Confirm</a></td>
+                                            <td>
+                                                <!-- Modal -->
+                                                <button type="button" class="btn btn-primary btn_triggerRequestorModal btnCustomLink" data-id="${order.id}" data-comment = ${order.reqComment} data-toggle="modal"  data-target="#userDetailModal"  >
+                                                    View Detail
+                                                </button>
+                                            </td>
+                                            <td>
+                                                <button type="button" class="btn btn-primary btn_confirmOrderModal btnCustomLink" data-id="${order.id}" data-toggle="modal"  data-target="#confirmModal"  >
+                                                    Confirm
+                                                </button>
+                                            </td>
                                         </tr>
                                     </c:forEach>
                                    </tbody>
@@ -144,10 +155,93 @@
                 </div>
             </div>
         </div>
+
+
     </div>
 </div>
 
+<div class="modal fade" id="userDetailModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Requestor Detail</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">X</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="col-form-label">Name :</label>
+                    <p id="req_name"></p>
+                </div>
+                <div class="form-group">
+                    <label class="col-form-label">Birthdate : </label>
+                    <p id="ride_date"></p>
+                </div>
+                <div class="form-group">
+                    <label class="col-form-label">Address:</label>
+                    <p id="ride_address"></p>
+                </div>
+                <div class="form-group">
+                    <label class="col-form-label">Contact No:</label>
+                    <p id="ride_phone"></p>
+                </div>
+                <div class="form-group">
+                    <label class="col-form-label">Email :</label>
+                    <p id="ride_email"></p>
+                </div>
 
+                <div class="form-group">
+                    <label class="col-form-label">Departure:</label>
+                    <p id="ride_departure"></p>
+                </div>
+                <div class="form-group">
+                    <label class="col-form-label">Destination:</label>
+                    <p id="ride_destination"></p>
+                </div>
+                <div class="form-group">
+                    <label class="col-form-label">Requested Date:</label>
+                    <p id="riderequest_date"></p>
+                </div>
+                <div class="form-group">
+                    <label class="col-form-label">Comment:</label>
+                    <p id="req_comment"></p>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Confirm</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                       <h3>Are you Sure?</h3>
+                    </div>
+                    <div class="form-group">
+                        <label for="provider-comment" class="col-form-label">Message: (Optional) </label>
+                        <textarea class="form-control" id="provider-comment"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" id= "btn_confirmOrder" class="btn btn-primary">Confirm Order</button>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 
         <!--   Core JS Files   -->
@@ -165,7 +259,7 @@
 
     <!--  Google Maps Plugin    -->
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
-
+    <script src="assets/js/scripts.js"></script>
     <!-- Light Bootstrap Table Core javascript and methods for Demo purpose -->
 	<script src="assets/js/light-bootstrap-dashboard.js"></script>
 
@@ -173,9 +267,9 @@
 	<script src="assets/js/demo.js"></script>
 
     <script>
-        $().ready(function(){
-            demo.initGoogleMaps();
-        });
+        // $().ready(function(){
+        //     demo.initGoogleMaps();
+        // });
     </script>
 
 </html>
